@@ -5,7 +5,8 @@ RUN apt-get update > /dev/null && apt-get install libssl-dev openssl -y > /dev/n
 RUN apt-get update > /dev/null && apt-get install openjdk-8-jdk -y > /dev/null
 
 
-ADD https://mirrors.estointernet.in/apache/kafka/2.5.0/kafka_2.12-2.5.0.tgz .
+#ADD https://mirrors.estointernet.in/apache/kafka/2.5.0/kafka_2.12-2.5.0.tgz .
+ADD https://archive.apache.org/dist/kafka/2.5.0/kafka_2.12-2.5.0.tgz .
 RUN tar xzf kafka_2.12-2.5.0.tgz && rm kafka_2.12-2.5.0.tgz
 
 RUN mkdir -p /etc/service/zookeeper/
@@ -22,7 +23,7 @@ RUN chmod +x /etc/service/kafka/run
 
 ENV KAFKA_HOME=/kafka_2.12-2.5.0
 ENV PASSWORD=password
-ENV DOMAIN=www.pardhu.com
+ENV DOMAIN=localhost
 
 EXPOSE 2181/tcp
 EXPOSE 9093/tcp
