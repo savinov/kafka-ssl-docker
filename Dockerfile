@@ -24,10 +24,12 @@ RUN chmod +x /etc/service/kafka/run
 ENV KAFKA_HOME=/kafka_2.12-2.5.0
 ENV PASSWORD=password
 ENV DOMAIN=localhost
+ENV SSL_PORT=9093
+ENV PLAINTEXT_PORT=9094
 
 EXPOSE 2181/tcp
-EXPOSE 9093/tcp
-EXPOSE 9094/tcp
+EXPOSE $SSL_PORT/tcp
+EXPOSE $PLAINTEXT_PORT/tcp
 
 HEALTHCHECK --interval=60s --timeout=5s --start-period=30s \
 CMD [[ $(sv status kafka) =~ "run" ]] || exit 1

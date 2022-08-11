@@ -56,10 +56,12 @@ if [[ ! -f ${SERVER_KEY_STORE} ]]; then
 fi
 
 # Copy server.properties to the relevant config directory
-if [[ ! -f ${KAFKA_HOME}/config/server.proprties ]]; then
+if [[ ! -f ${KAFKA_HOME}/config/serverssl.properties ]]; then
     cd ${KAFKA_HOME} || exitWithError "KAFKA_HOME directory does not exist"
     cp /serverssl.properties ./config/
     sed -i "s|<WEBSITE>|${DOMAIN}|g" ./config/serverssl.properties
+    sed -i "s|<SSL_PORT>|${SSL_PORT}|g" ./config/serverssl.properties
+    sed -i "s|<PLAINTEXT_PORT>|${PLAINTEXT_PORT}|g" ./config/serverssl.properties
     sed -i "s|<PASSWORD>|${PASSWORD}|g" ./config/serverssl.properties
     sed -i "s|<KEYSTORELOCATION>|${SERVER_KEY_STORE}|g" ./config/serverssl.properties
     sed -i "s|<TRUSTSTORELOCATION>|${SERVER_TRUST_STORE}|g" ./config/serverssl.properties
