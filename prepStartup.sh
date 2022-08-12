@@ -7,10 +7,20 @@
 : "${CLIENT_TRUST_STORE=$KAFKA_HOME/ssl/client.truststore.jks}"
 : "${DOMAIN=www.mywebsite.com}"
 : "${PASSWORD=abc123def}"
+: "${SSL_PORT=9093}"
+: "${PLAINTEXT_PORT=9094}"
+: "${BROKER_ID=101}"
 
-echo -e "KAFKA_HOME=$KAFKA_HOME\n\
+echo -e "prepStartup.sh:\n\
+KAFKA_HOME=$KAFKA_HOME\n\
+CLIENT_KEY_STORE=$CLIENT_KEY_STORE\n\
+CLIENT_TRUST_STORE=$CLIENT_TRUST_STORE\n\
 SERVER_KEY_STORE=$SERVER_KEY_STORE\n\
+SERVER_TRUST_STORE=$SERVER_TRUST_STORE\n\
 DOMAIN=$DOMAIN\n\
+SSL_PORT=$SSL_PORT\n\
+PLAINTEXT_PORT=$PLAINTEXT_PORT\n\
+BROKER_ID=$BROKER_ID\n\
 PASSWORD=$PASSWORD"
 
 
@@ -65,4 +75,5 @@ if [[ ! -f ${KAFKA_HOME}/config/serverssl.properties ]]; then
     sed -i "s|<PASSWORD>|${PASSWORD}|g" ./config/serverssl.properties
     sed -i "s|<KEYSTORELOCATION>|${SERVER_KEY_STORE}|g" ./config/serverssl.properties
     sed -i "s|<TRUSTSTORELOCATION>|${SERVER_TRUST_STORE}|g" ./config/serverssl.properties
+    sed -i "s|<BROKER_ID>|${BROKER_ID}|g" ./config/serverssl.properties
 fi

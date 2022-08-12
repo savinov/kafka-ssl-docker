@@ -4,7 +4,8 @@
 : "${KAFKA_HOME=/kafka_2.12-2.5.0}"
 : "${PLAINTEXT_PORT=9094}"
 
-echo -e "KAFKA_HOME=$KAFKA_HOME\n\
+echo -e "postStartup.sh:\n\
+KAFKA_HOME=$KAFKA_HOME\n\
 PLAINTEXT_PORT=$PLAINTEXT_PORT"
 
 # wait kafka server to start
