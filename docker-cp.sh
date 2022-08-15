@@ -7,7 +7,7 @@ CONTAINER=$2
 
 mkdir -p "jks/${KAFKA}"
 
-docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/server.keystore.jks jks/${KAFKA}/server.keystore.jks"
-docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/server.truststore.jks jks/${KAFKA}/server.truststore.jks"
-docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/client.keystore.jks jks/${KAFKA}/client.keystore.jks"
-docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/client.truststore.jks jks/${KAFKA}/client.truststore.jks"
+docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/server.keystore.jks" "jks/${KAFKA}/server.keystore.jks"
+docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/server.truststore.jks" "jks/${KAFKA}/server.truststore.jks"
+docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/client.keystore.jks" "jks/${KAFKA}/client.keystore.jks"
+docker cp "${CONTAINER}:/kafka_2.12-2.5.0/ssl/client.truststore.jks" "jks/${KAFKA}/client.truststore.jks"

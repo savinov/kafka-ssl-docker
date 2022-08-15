@@ -16,6 +16,7 @@ RUN mkdir -p /etc/service/kafka/
 COPY serverssl.properties .
 COPY prepStartup.sh .
 COPY postStartup.sh .
+COPY healthCheck.sh .
 
 RUN /bin/bash -c "echo -e '#!/bin/bash\nexec /kafka_2.12-2.5.0/bin/zookeeper-server-start.sh /kafka_2.12-2.5.0/config/zookeeper.properties\n' > /etc/service/zookeeper/run"
 RUN /bin/bash -c "echo -e '#!/bin/bash\n/prepStartup.sh\n/postStartup.sh&\nexec /kafka_2.12-2.5.0/bin/kafka-server-start.sh /kafka_2.12-2.5.0/config/serverssl.properties\n' > /etc/service/kafka/run"
@@ -34,7 +35,10 @@ EXPOSE 2181/tcp
 EXPOSE $SSL_PORT/tcp
 EXPOSE $PLAINTEXT_PORT/tcp
 
-HEALTHCHECK --interval=60s --timeout=5s --start-period=30s \
-CMD [[ $(sv status kafka) =~ "run" ]] || exit 1
+#HEALTHCHECK --interval=60s --timeout=5s --start-period=30s \
+#CMD [[ $(sv status kafka) =~ "run" ]] || exit 1
+
+HEALTHCHECK --interval=5s --timeout=10s --start-period=30s --retries=10 \
+CMD ./healthCheck.sh || exit 1
 
 CMD ["runsvdir", "/etc/service"]

@@ -65,6 +65,14 @@ if [[ ! -f ${SERVER_KEY_STORE} ]]; then
     cd /
 fi
 
+# setup certificates to run kafka-replicator with SSL
+if [ -d /ssl-certs ]; then
+  cp -r "${KAFKA_HOME}/ssl" "/ssl-certs/${DOMAIN}"
+  keytool -importkeystore -srckeystore "/ssl-certs/${DOMAIN}/client.keystore.jks" \
+  -destkeystore "/ssl-certs/${DOMAIN}/client.keystore.p12" -srcstoretype jks -deststoretype pkcs12 \
+  -srcstorepass password -deststorepass password
+fi
+
 # Copy server.properties to the relevant config directory
 if [[ ! -f ${KAFKA_HOME}/config/serverssl.properties ]]; then
     cd ${KAFKA_HOME} || exitWithError "KAFKA_HOME directory does not exist"
